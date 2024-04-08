@@ -141,7 +141,7 @@ const Organisation = () => {
     {
       field: "contact_number",
       headerName: "Contact Number",
-      flex: 2,
+      flex: 1,
       headerClassName: "header-text",
       cellClassName: "data-cell",
     },
@@ -155,10 +155,11 @@ const Organisation = () => {
     {
       field: "actions",
       headerName: "Actions",
+      headerClassName: "header-text",
       flex: 2,
       cellClassName: "data-cell",
       renderCell: ({ row }) => (
-        <Box p="1vh" display="flex" justifyContent="center">
+        <Box display="flex" justifyContent="center">
           <Link
             onClick={() => handleOpenDetailsDialog(row)}
             style={{ marginRight: "2vh" }}

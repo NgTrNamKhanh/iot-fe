@@ -248,3 +248,11 @@
 #topic-header {
   flex-basis: 70%;
 }
+
+.loading-messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 61vh;
+  height: 45vh;
+}

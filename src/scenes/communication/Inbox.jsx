@@ -1,3 +1,6 @@
+import CircularProgress from "@mui/material/CircularProgress";
+import LinearProgress from "@mui/material/LinearProgress";
+import Stack from "@mui/material/Stack";
 import axios from "axios";
 import {
   MDBCard,
@@ -9,10 +12,10 @@ import {
 } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { Scrollbar } from 'react-scrollbars-custom';
 import { BiSolidMessageAdd } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
+import { Scrollbar } from "react-scrollbars-custom";
 import Header from "../../components/Header";
 import "../../css/chat.css";
 import apis from "../../services/api-service";
@@ -375,7 +378,22 @@ const Inbox = () => {
 
                     <div>
                       {loading ? (
-                        <p>Loading chats...</p>
+                        <Stack
+                          sx={{ width: "107%", color: "grey.500" }}
+                          spacing={2}
+                        >
+                          {["secondary", "success", "inherit"].map((color, i) =>
+                            Array(2)
+                              .fill()
+                              .map((_, i) => (
+                                <React.Fragment key={i}>
+                                  <LinearProgress color="secondary" />
+                                  <LinearProgress color="success" />
+                                  <LinearProgress color="inherit" />
+                                </React.Fragment>
+                              ))
+                          )}
+                        </Stack>
                       ) : fetchingChatError ? (
                         <p>Error fetching chats</p>
                       ) : (
@@ -496,7 +514,9 @@ const Inbox = () => {
                 <MDBCol md="6" lg="7" xl="8" style={{ display: "flex" }}>
                   <div className="message-chat-container">
                     {refresh ? (
-                      <p id="empty-message-warning">Loading messages...</p>
+                      <div className="loading-messages">
+                        <CircularProgress disableShrink />
+                      </div>
                     ) : fetchingMessageError ? (
                       <p id="empty-message-warning">Error fetching messages</p>
                     ) : (
@@ -665,7 +685,22 @@ const Inbox = () => {
                     <p id="member-title">Other members:</p>
                     <div className="member-list-container">
                       {fetching ? (
-                        <p style={{ marginLeft: "2vh" }}>Loading members...</p>
+                        <Stack
+                          sx={{ width: "97%", color: "grey.500" }}
+                          spacing={2}
+                        >
+                          {["secondary", "success", "inherit"].map((color, i) =>
+                            Array(2)
+                              .fill()
+                              .map((_, i) => (
+                                <React.Fragment key={i}>
+                                  <LinearProgress color="secondary" />
+                                  <LinearProgress color="success" />
+                                  <LinearProgress color="inherit" />
+                                </React.Fragment>
+                              ))
+                          )}
+                        </Stack>
                       ) : fetchingMembersError ? (
                         <p style={{ marginLeft: "2vh" }}>
                           Error fetching members

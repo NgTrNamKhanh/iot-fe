@@ -1,5 +1,6 @@
-import { AddBox, EditOutlined } from "@mui/icons-material";
-import { Box, Button, Drawer, Link, Typography } from "@mui/material";
+import { EditOutlined } from "@mui/icons-material";
+import { Box, Button, Drawer, Typography } from "@mui/material";
+import Skeleton from "@mui/material/Skeleton";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
@@ -8,8 +9,8 @@ import useFetch from "../../hooks/useFetch";
 import apis from "../../services/api-service";
 import authHeader from "../../services/auth-header";
 import AddDevice from "../form/addDevice";
-import DeviceBox from "./DeviceBox";
 import AssignDeviceForm from "../form/assignDevice";
+import DeviceBox from "./DeviceBox";
 
 const ManagerDevices = () => {
   const { data, loading, error, reFetch } = useFetch(
@@ -27,12 +28,6 @@ const ManagerDevices = () => {
   });
   console.log(devicesByOwner);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     localStorage.setItem("user_devices", JSON.stringify(data));
-  //   };
-  //   fetchData();
-  // }, [data]);
   const [clickedDevice, setClickedDevice] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,17 +51,6 @@ const ManagerDevices = () => {
       hour12: true,
     });
   };
-  // const [filterStatus, setFilterStatus] = useState('All');
-  // const handleFilterChange = (event) => {
-  //   setFilterStatus(event.target.value);
-  // };
-
-  // const filteredDevices = data.filter((device) => {
-  //   if (filterStatus === 'All') {
-  //     return true; // Show all devices
-  //   }
-  //   return device.status.toLowerCase() === filterStatus.toLowerCase();
-  // });
 
   console.log(clickedDevice);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
@@ -113,28 +97,28 @@ const ManagerDevices = () => {
   const [editedName, setEditedName] = useState();
   useEffect(() => {
     if (clickedDevice) {
-      setEditedName(clickedDevice.name)
+      setEditedName(clickedDevice.name);
     }
   }, [clickedDevice]);
   const [isEditingName, setIsEditingName] = useState(false);
-  const handleSaveName = async() => {
+  const handleSaveName = async () => {
     setIsEditingName(false);
-    try{
+    try {
       const editDevice = {
-        'id': clickedDevice.id,
-        'name': editedName
-      }
+        id: clickedDevice.id,
+        name: editedName,
+      };
       await axios.post(`${apis.device}device/edit`, editDevice, {
         headers: authHeader(),
         withCredentials: true,
       });
       handleDrawerClose();
-      setEditedName("")
-      await reFetch()
-    }catch(err){
+      setEditedName("");
+      await reFetch();
+    } catch (err) {
       handleDrawerClose();
-      setEditedName("")
-      console.log(err)
+      setEditedName("");
+      console.log(err);
     }
   };
 
@@ -150,47 +134,27 @@ const ManagerDevices = () => {
   return (
     <Box m="3vh">
       <Header title="Devices" subtitle="Managing your own devices" />
-      <Button
-        onClick={() => handleOpenAddDialog()}
-        sx={{ color: "red" }}
-      >
+      <Button onClick={() => handleOpenAddDialog()} sx={{ color: "red" }}>
         Add Device
       </Button>
 
-      <Button
-        onClick={() => handleOpenAssignDialog()}
-        sx={{ color: "red" }}
-      >
+      <Button onClick={() => handleOpenAssignDialog()} sx={{ color: "red" }}>
         Assign Device
       </Button>
-      {/* <Box m="2vh">
-        <FormControl display="flex" flex-wrap='wrap' justify-content= 'start'>
-            <InputLabel>Status</InputLabel>
-            <Select
-                // value={filterStatus}
-                // onChange={handleFilterChange}
-                style={{ marginLeft: '10px', position: 'relative'}}
-            >
-                <MenuItem value="All">All</MenuItem>
-                <MenuItem value="On">On</MenuItem>
-                <MenuItem value="Off">Off</MenuItem>
-            </Select>
-            <InputLabel style={{ marginLeft: '10px' }}>Manufacturer</InputLabel>
-            <Select
-                // value={anotherFilter}
-                // onChange={handleAnotherFilterChange}
-                style={{ marginLeft: '10px', position: 'relative'}}
-            >
-                <MenuItem value="SomeValue">Toshiba</MenuItem>
-                <MenuItem value="AnotherValue">Samsung</MenuItem>
-                {/* Add more options as needed */}
-      {/* </Select> */}
-      {/* </FormControl> */}
-      {/* </Box> */}
+
       <div className="app-container">
         <div className="devicesContainer">
           {loading ? (
-            <p>Loading...</p>
+            <Box style={{ width: "100vh" }}>
+              {Array(8)
+                .fill()
+                .map((_, i) => (
+                  <>
+                    <Skeleton />
+                    <Skeleton animation={i % 2 === 0 ? "wave" : false} />
+                  </>
+                ))}
+            </Box>
           ) : error ? (
             <p>Error: {error.message}</p>
           ) : (
@@ -233,19 +197,20 @@ const ManagerDevices = () => {
             <div>
               <Typography variant="subtitle1">{`Device Name: ${clickedDevice.name}`}</Typography>
               {isEditingName ? (
-              <div>
-                <input
-                  type="text"
-                  value={editedName}
-                  onChange={handleChangeName}
-                />
-                <button onClick={handleSaveName}>Save</button>
-                <button onClick={handleCancelEditName}>Cancel</button>
-              </div>):(
+                <div>
+                  <input
+                    type="text"
+                    value={editedName}
+                    onChange={handleChangeName}
+                  />
+                  <button onClick={handleSaveName}>Save</button>
+                  <button onClick={handleCancelEditName}>Cancel</button>
+                </div>
+              ) : (
                 <EditOutlined
-                  onClick={()=>setIsEditingName(true)}
+                  onClick={() => setIsEditingName(true)}
                   style={{ marginRight: "2vh" }}
-              />
+                />
               )}
               <Typography variant="subtitle1">{`Type: ${clickedDevice.type}`}</Typography>
               <Typography variant="subtitle1">{`Status: ${
@@ -280,7 +245,7 @@ const ManagerDevices = () => {
         <AssignDeviceForm
           handleClose={handleCloseAssignDialog}
           reFetch={reFetch}
-          isManager  = {true}
+          isManager={true}
         />
       )}
     </Box>

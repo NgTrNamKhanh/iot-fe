@@ -1,3 +1,5 @@
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDateTimePicker } from "@mui/x-date-pickers/DesktopDateTimePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -167,7 +169,9 @@ const HealthProgress = () => {
       </div>
       <div className="progress-body">
         {refresh ? (
-          <p>Loading your status...</p>
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
         ) : error ? (
           <div>
             {console.error("Error fetching progress:", error)}{" "}
@@ -308,7 +312,9 @@ const HealthProgress = () => {
         )}
         <div className="goal-progress">
           {refresh ? (
-            <p>Loading your goal...</p>
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
           ) : error ? (
             <div>
               {console.error("Error fetching goal:", error)}{" "}

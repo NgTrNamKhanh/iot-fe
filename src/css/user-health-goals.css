@@ -5,6 +5,8 @@
   min-height: 65vh;
   max-height: 65vh;
   width: fit-content;
+  margin: 2vh;
+  min-width: 150vh;
 }
 
 .title-alert {
@@ -12,10 +14,11 @@
 }
 
 .set-goal-success-toast {
-  position: relative;
+  position: absolute;
   z-index: 1000;
-  padding-right: 0;
-  padding-left: 0;
+  right: 2vh;
+  top: 12vh;
+  height: -moz-fit-content;
   height: fit-content;
 }
 

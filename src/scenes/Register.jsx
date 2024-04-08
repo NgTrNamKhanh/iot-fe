@@ -255,7 +255,7 @@ const Register = () => {
             </h3>
             <Form onSubmit={handleRegister} ref={(c) => {}}>
               {!successful && (
-                <div style={{ overflow: "auto" }}>
+                <div>
                   <MDBRow>
                     <MDBCol md="6">
                       <label htmlFor="username" className="input-field">

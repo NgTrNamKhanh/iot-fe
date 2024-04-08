@@ -134,21 +134,21 @@ const User = () => {
     {
       field: "id",
       headerName: "UID",
-      flex: 1,
+      flex: 2,
       renderCell: ({ value }) => renderCellWithValue(value),
       headerClassName: "field-header-style",
     },
     {
       field: "username",
       headerName: "Username",
-      flex: 1,
+      flex: 2,
       renderCell: ({ value }) => renderCellWithValue(value),
       headerClassName: "field-header-style username-header",
     },
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      flex: 2,
       renderCell: ({ value }) => renderCellWithValue(value),
       headerClassName: "field-header-style",
     },
@@ -162,7 +162,7 @@ const User = () => {
     {
       field: "actions",
       headerName: "Actions",
-      flex: 1,
+      flex: 2,
       renderCell: ({ row }) => (
         <Box p="1vh" display="flex" justifyContent="center">
           <Link>

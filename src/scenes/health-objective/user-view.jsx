@@ -1,6 +1,8 @@
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+import Stack from "@mui/material/Stack";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Toast } from "react-bootstrap";
 import Header from "../../components/Header";
 import "../../css/user-health-goals.css";
@@ -108,64 +110,82 @@ const UserObjectiveView = () => {
         </Toast>
       </div>
       <div className="goals-container">
-        {data && (
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 2,
-              maxWidth: "100%",
-              margin: "2vh 2vh 0 2vh",
-              justifyContent: "center",
-            }}
+        {loading ? (
+          <Stack
+            sx={{ width: "97%", color: "grey.500", margin: "2vh" }}
+            spacing={2}
           >
-            {data.map((objective) => (
-              <Card
-                key={objective.id}
-                sx={{
-                  flex: "0 0 calc(33.3333% - 1.5vh)",
-                  marginBottom: 2,
-                  overflow: "unset",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  height="120vh"
-                  image={objective.image}
-                  alt={objective.title}
-                />
-                <div className="goal-preview">
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="div"
-                      className="goal-title"
+            {["secondary", "success", "inherit"].map((color, i) =>
+              Array(4)
+                .fill()
+                .map((_, i) => (
+                  <React.Fragment key={i}>
+                    <LinearProgress color="secondary" />
+                    <LinearProgress color="success" />
+                  </React.Fragment>
+                ))
+            )}
+          </Stack>
+        ) : (
+          data && (
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 2,
+                maxWidth: "100%",
+                margin: "2vh 2vh 0 2vh",
+                justifyContent: "center",
+              }}
+            >
+              {data.map((objective) => (
+                <Card
+                  key={objective.id}
+                  sx={{
+                    flex: "0 0 calc(33.3333% - 1.5vh)",
+                    marginBottom: 2,
+                    overflow: "unset",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    height="120vh"
+                    image={objective.image}
+                    alt={objective.title}
+                  />
+                  <div className="goal-preview">
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        className="goal-title"
+                      >
+                        {objective.title}
+                      </Typography>
+                    </CardContent>
+                    <Button
+                      onClick={() => handleShowHealthObjectiveDialog(objective)}
+                      className="btn btn-success"
+                      id="choose-goal"
                     >
-                      {objective.title}
-                    </Typography>
-                  </CardContent>
-                  <Button
-                    onClick={() => handleShowHealthObjectiveDialog(objective)}
-                    className="btn btn-success"
-                    id="choose-goal"
-                  >
-                    Choose
-                  </Button>
-                  {openHealthObjectiveDialog && (
-                    <HealthObjectiveGoalDetailOption
-                      show={openHealthObjectiveDialog}
-                      goal={selectedHealthObjective}
-                      handleCloseDefault={
-                        handleDefaultCloseHealthObjectiveDialog
-                      }
-                      handleClose={handleCloseHealthObjectiveDialog}
-                    />
-                  )}
-                </div>
-              </Card>
-            ))}
-          </Box>
+                      Choose
+                    </Button>
+                    {openHealthObjectiveDialog && (
+                      <HealthObjectiveGoalDetailOption
+                        show={openHealthObjectiveDialog}
+                        goal={selectedHealthObjective}
+                        handleCloseDefault={
+                          handleDefaultCloseHealthObjectiveDialog
+                        }
+                        handleClose={handleCloseHealthObjectiveDialog}
+                      />
+                    )}
+                  </div>
+                </Card>
+              ))}
+            </Box>
+          )
         )}
       </div>
       <div className="recommended-goals">
