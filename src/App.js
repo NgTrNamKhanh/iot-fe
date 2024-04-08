@@ -6,7 +6,6 @@ import "./App.css";
 import AuthService from "./services/auth.service";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import "react-pro-sidebar/dist/css/styles.css";
 import { useNavigate } from "react-router-dom";
 import { ProtectedRoute } from "./common/with-router";
 import HealthProgress from "./scenes/HealthProgress.jsx";

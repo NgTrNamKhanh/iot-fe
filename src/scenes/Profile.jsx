@@ -1,8 +1,5 @@
-import Button from "@material-ui/core/Button";
 import React, { useEffect, useState } from "react";
 import { Toast } from "react-bootstrap";
-import { FaUserEdit } from "react-icons/fa";
-import { RiLockPasswordFill } from "react-icons/ri";
 import { Navigate } from "react-router-dom";
 import Header from "../components/Header";
 import "../css/user-profile.css";
@@ -10,7 +7,8 @@ import useFetch from "../hooks/useFetch";
 import apis from "../services/api-service";
 import EditProfile from "./EditProfile";
 import EditUserPassword from "./EditUserPassword";
-
+import {  Lock, ManageAccounts } from "@mui/icons-material";
+import { Button } from '@mui/material';
 const Profile = () => {
   const [redirect, setRedirect] = useState(null);
   const [userReady, setUserReady] = useState(false);
@@ -160,7 +158,7 @@ const Profile = () => {
                       onClick={() => handleShowEditProfileDialog(currentUser)}
                       className="edit-profile-btn"
                     >
-                      <FaUserEdit className="profile-management-icon" />
+                      <ManageAccounts className="profile-management-icon" />
                       EDIT PROFILE
                     </Button>
                     {openEditProfileDialog && (
@@ -176,7 +174,7 @@ const Profile = () => {
                       onClick={() => handleShowEditPasswordDialog(currentUser)}
                       className="edit-password-btn"
                     >
-                      <RiLockPasswordFill className="profile-management-icon" />
+                      <Lock className="profile-management-icon" />
                       EDIT PASSWORD
                     </Button>
                     {openEditPasswordDialog && (

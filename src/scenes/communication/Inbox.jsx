@@ -9,7 +9,7 @@ import {
 } from "mdb-react-ui-kit";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { Scrollbars } from "react-custom-scrollbars";
+import { Scrollbar } from 'react-scrollbars-custom';
 import { BiSolidMessageAdd } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
@@ -395,7 +395,7 @@ const Inbox = () => {
                             ) : null}
                           </div>
                           {chats && chats.length > 0 ? (
-                            <Scrollbars
+                            <Scrollbar
                               suppressScrollX
                               style={{ position: "relative", height: "40vh" }}
                             >
@@ -479,7 +479,7 @@ const Inbox = () => {
                                     </React.Fragment>
                                   ))}
                               </ul>
-                            </Scrollbars>
+                            </Scrollbar>
                           ) : (
                             <p>
                               {searchChatText
@@ -500,7 +500,7 @@ const Inbox = () => {
                     ) : fetchingMessageError ? (
                       <p id="empty-message-warning">Error fetching messages</p>
                     ) : (
-                      <Scrollbars className="pt-3 pe-3" id="chat-scrollbars">
+                      <Scrollbar className="pt-3 pe-3" id="chat-scrollbars">
                         {messages && messages.length > 0 ? (
                           <div>
                             <div id="chat-message-container">
@@ -615,7 +615,7 @@ const Inbox = () => {
                             No messages yet
                           </p>
                         )}
-                      </Scrollbars>
+                      </Scrollbar>
                     )}
                     <div
                       id="sender-type"

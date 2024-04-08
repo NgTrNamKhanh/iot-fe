@@ -6,7 +6,7 @@ import { FaNotesMedical } from "react-icons/fa";
 import { GiHealthIncrease } from "react-icons/gi";
 import { ImProfile } from "react-icons/im";
 import { MdDevicesOther } from "react-icons/md";
-import { Menu, MenuItem, ProSidebar } from "react-pro-sidebar";
+import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import { tokens } from "../../../theme";
 
@@ -21,9 +21,9 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       }}
       onClick={() => setSelected(title)}
       icon={icon}
+      component={<Link to={to} />}
     >
       <Typography>{title}</Typography>
-      <Link to={to} />
     </MenuItem>
   );
 };
@@ -35,24 +35,37 @@ const UserSideBar = (currentUser) => {
   return (
     <Box
       sx={{
-        "& .pro-sidebar-inner": {
-          background: `${colors.primary[400]} !important`,
+        position: "sticky",
+        display: "flex",
+        height: "100vh",
+        top: 0,
+        bottom: 0,
+        zIndex: 10000,
+        "& .sidebar": {
+          border: "none",
         },
-        "& .pro-icon-wrapper": {
+        "& .menu-icon": {
           backgroundColor: "transparent !important",
         },
-        "& .pro-inner-item": {
-          padding: "0.5vh 3.5vh 0.5vh 2vh !important",
+        "& .menu-item": {
+          // padding: "5px 35px 5px 20px !important",
+          backgroundColor: "transparent !important",
         },
-        "& .pro-inner-item:hover": {
-          color: "#868dfb !important",
+        "& .menu-anchor": {
+          color: "inherit !important",
+          backgroundColor: "transparent !important",
         },
-        "& .pro-menu-item.active": {
-          color: "#6870fa !important",
+        "& .menu-item:hover": {
+          color: `${colors.blueAccent[500]} !important`,
+          backgroundColor: "transparent !important",
+        },
+        "& .menu-item.active": {
+          color: `${colors.greenAccent[500]} !important`,
+          backgroundColor: "transparent !important",
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
+      <Sidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -171,7 +184,7 @@ const UserSideBar = (currentUser) => {
             />
           </Box>
         </Menu>
-      </ProSidebar>
+      </Sidebar>
     </Box>
   );
 };
