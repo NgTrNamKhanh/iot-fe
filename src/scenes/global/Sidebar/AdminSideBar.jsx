@@ -5,7 +5,8 @@ import {
   PeopleOutlined,
   PersonOutlined,
 } from "@mui/icons-material";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import {  IconButton, Typography } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { useState } from "react";
 import { BiSolidChat } from "react-icons/bi";
 import { GiHealthIncrease } from "react-icons/gi";
@@ -46,26 +47,27 @@ const AdminSideBar = (currentUser) => {
         height: "100vh",
         top: 0,
         bottom: 0,
+        background: colors.blueAccent[700],
+        border: 'none',
         zIndex: 10000,
-        "& .sidebar": {
+        "& .ps-sidebar-container": {
+          backgroundColor: 'transparent !important',
+        },
+        "& .ps-sidebar-root": {
+          border: 'none',
+        },
+        "& .ps-sidebar": {
           border: "none",
-        },
-        "& .menu-icon": {
           backgroundColor: "transparent !important",
         },
-        "& .menu-item": {
-          // padding: "5px 35px 5px 20px !important",
+        "& .ps-menu-icon": {
           backgroundColor: "transparent !important",
         },
-        "& .menu-anchor": {
-          color: "inherit !important",
-          backgroundColor: "transparent !important",
-        },
-        "& .menu-item:hover": {
+        "& .ps-menu-item-root:hover": {
           color: `${colors.blueAccent[500]} !important`,
           backgroundColor: "transparent !important",
         },
-        "& .menu-item.active": {
+        "& .ps-menu-item.active": {
           color: `${colors.greenAccent[500]} !important`,
           backgroundColor: "transparent !important",
         },

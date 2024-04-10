@@ -214,9 +214,12 @@ const User = () => {
           "& .name-column--cell": {
             color: colors.greenAccent[300],
           },
+          "& .css-1essi2g-MuiDataGrid-columnHeaderRow":{
+            backgroundColor: 'transparent !important',
+          },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
             borderBottom: "none",
+            backgroundColor: colors.blueAccent[700],
           },
           "& .MuiDataGrid-virtualScroller": {
             backgroundColor: colors.primary[400],

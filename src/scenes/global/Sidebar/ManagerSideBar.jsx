@@ -32,37 +32,38 @@ const ManagerSideBar = (currentUser) => {
   const [selected, setSelected] = useState("Dashboard");
   return (
     <Box
-      sx={{
-        position: "sticky",
-        display: "flex",
-        height: "100vh",
-        top: 0,
-        bottom: 0,
-        zIndex: 10000,
-        "& .sidebar": {
-          border: "none",
-        },
-        "& .menu-icon": {
-          backgroundColor: "transparent !important",
-        },
-        "& .menu-item": {
-          // padding: "5px 35px 5px 20px !important",
-          backgroundColor: "transparent !important",
-        },
-        "& .menu-anchor": {
-          color: "inherit !important",
-          backgroundColor: "transparent !important",
-        },
-        "& .menu-item:hover": {
-          color: `${colors.blueAccent[500]} !important`,
-          backgroundColor: "transparent !important",
-        },
-        "& .menu-item.active": {
-          color: `${colors.greenAccent[500]} !important`,
-          backgroundColor: "transparent !important",
-        },
-      }}
-    >
+    sx={{
+      position: "sticky",
+      display: "flex",
+      height: "100vh",
+      top: 0,
+      bottom: 0,
+      background: colors.blueAccent[700],
+      border: 'none',
+      zIndex: 10000,
+      "& .ps-sidebar-container": {
+        backgroundColor: 'transparent !important',
+      },
+      "& .ps-sidebar-root": {
+        border: 'none',
+      },
+      "& .ps-sidebar": {
+        border: "none",
+        backgroundColor: "transparent !important",
+      },
+      "& .ps-menu-icon": {
+        backgroundColor: "transparent !important",
+      },
+      "& .ps-menu-item-root:hover": {
+        color: `${colors.blueAccent[500]} !important`,
+        backgroundColor: "transparent !important",
+      },
+      "& .ps-menu-item.active": {
+        color: `${colors.greenAccent[500]} !important`,
+        backgroundColor: "transparent !important",
+      },
+    }}
+  >
       <Sidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
           <MenuItem

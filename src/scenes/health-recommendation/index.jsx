@@ -212,6 +212,9 @@ const HealthRecommendation = () => {
           "& .MuiDataGrid-root": {
             border: "none",
           },
+          "& .css-1essi2g-MuiDataGrid-columnHeaderRow":{
+            backgroundColor: 'transparent !important',
+          },
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
           },

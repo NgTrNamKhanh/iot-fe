@@ -80,9 +80,10 @@ const UserDevices = () => {
       setEditedName(clickedDevice.name);
     }
   }, [clickedDevice]);
+  const [submitLoading, setSubmitLoading] = useState(false)
   const [isEditingName, setIsEditingName] = useState(false);
   const handleSaveName = async () => {
-    setIsEditingName(false);
+    setSubmitLoading(true)
     try {
       const editDevice = {
         id: clickedDevice.id,
@@ -94,10 +95,15 @@ const UserDevices = () => {
       });
       handleDrawerClose();
       setEditedName("");
+      setSubmitLoading(false)
+      setIsEditingName(false);
+
       await reFetch();
     } catch (err) {
       handleDrawerClose();
       setEditedName("");
+      setSubmitLoading(false)
+      setIsEditingName(false);
       console.log(err);
     }
   };
@@ -167,9 +173,10 @@ const UserDevices = () => {
                     type="text"
                     value={editedName}
                     onChange={handleChangeName}
+                    disabled={submitLoading}
                   />
-                  <button onClick={handleSaveName}>Save</button>
-                  <button onClick={handleCancelEditName}>Cancel</button>
+                  <button onClick={handleSaveName} disabled={submitLoading}>{submitLoading? 'Loading...':'Save'}</button>
+                  <button onClick={handleCancelEditName} disabled={submitLoading}>Cancel</button>
                 </div>
               ) : (
                 <EditOutlined
@@ -191,14 +198,16 @@ const UserDevices = () => {
                   style={{ maxWidth: "100%", marginTop: "10px" }}
                 />
               )}
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleUnassignDevice}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? <span>Loading...</span> : "Unassign"}
-              </Button>
+              <Box sx={{marginTop: '10px'}}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleUnassignDevice}
+                  disabled={isSubmitting && submitLoading}
+                >
+                  {isSubmitting ? <span>Loading...</span> : "Unassign"}
+                </Button>
+              </Box>
             </div>
           )}
         </Box>

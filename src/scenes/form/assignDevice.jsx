@@ -195,7 +195,8 @@ const AssignDeviceForm = ({ handleClose, reFetch, isManager }) => {
                 justifyContent="space-between"
                 alignItems="center"
                 mt="3vh"
-                pt="3vh"
+                ml="5vh"
+                // pt="3vh"
               >
                 <Button
                   type="submit"

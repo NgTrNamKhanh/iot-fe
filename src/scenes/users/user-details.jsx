@@ -53,13 +53,6 @@ const UserDetails = ({
       </DialogContent>
       <DialogActions>
         <Button
-          className="view-health-details"
-          onClick={handleCloseDialog}
-          colors="primary"
-        >
-          View health status
-        </Button>
-        <Button
           className="close-details-dialog"
           onClick={handleCloseDialog}
           colors="primary"

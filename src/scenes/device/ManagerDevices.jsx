@@ -226,14 +226,16 @@ const ManagerDevices = () => {
                   style={{ maxWidth: "100%", marginTop: "10px" }}
                 />
               )}
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleUnassignDevice}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? <span>Loading...</span> : "Unassign"}
-              </Button>
+              <Box sx={{marginTop: '10px'}}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleUnassignDevice}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? <span>Loading...</span> : "Unassign"}
+                </Button>
+              </Box>
             </div>
           )}
         </Box>

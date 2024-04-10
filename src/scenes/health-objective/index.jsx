@@ -197,6 +197,9 @@ const HealthObjective = () => {
           "& .MuiDataGrid-virtualScroller": {
             backgroundColor: colors.primary[400],
           },
+          "& .css-1essi2g-MuiDataGrid-columnHeaderRow":{
+            backgroundColor: 'transparent !important',
+          },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
             backgroundColor: colors.blueAccent[700],
