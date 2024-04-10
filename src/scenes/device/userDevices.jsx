@@ -54,12 +54,11 @@ const UserDevices = () => {
   };
   const handleUnassignDevice = async () => {
     setIsSubmitting(true);
-    const assignDevice = {
-      owner: clickedDevice.ownerUserName,
-      device_id: clickedDevice.id,
-    };
-    console.log(assignDevice);
     try {
+      const assignDevice = {
+        owner: clickedDevice.ownerUserName,
+        device_id: clickedDevice.id,
+      };
       // Make a request to unassign the device
       await axios.post(`${apis.device}device/unassign`, assignDevice, {
         headers: authHeader(),
@@ -80,10 +79,9 @@ const UserDevices = () => {
       setEditedName(clickedDevice.name);
     }
   }, [clickedDevice]);
-  const [submitLoading, setSubmitLoading] = useState(false)
   const [isEditingName, setIsEditingName] = useState(false);
   const handleSaveName = async () => {
-    setSubmitLoading(true)
+    setIsSubmitting(true)
     try {
       const editDevice = {
         id: clickedDevice.id,
@@ -95,14 +93,14 @@ const UserDevices = () => {
       });
       handleDrawerClose();
       setEditedName("");
-      setSubmitLoading(false)
+      setIsSubmitting(false)
       setIsEditingName(false);
 
       await reFetch();
     } catch (err) {
       handleDrawerClose();
       setEditedName("");
-      setSubmitLoading(false)
+      setIsSubmitting(false)
       setIsEditingName(false);
       console.log(err);
     }
@@ -173,10 +171,10 @@ const UserDevices = () => {
                     type="text"
                     value={editedName}
                     onChange={handleChangeName}
-                    disabled={submitLoading}
+                    disabled={isSubmitting}
                   />
-                  <button onClick={handleSaveName} disabled={submitLoading}>{submitLoading? 'Loading...':'Save'}</button>
-                  <button onClick={handleCancelEditName} disabled={submitLoading}>Cancel</button>
+                  <button onClick={handleSaveName} disabled={isSubmitting}>{isSubmitting? 'Loading...':'Save'}</button>
+                  <button onClick={handleCancelEditName} disabled={isSubmitting}>Cancel</button>
                 </div>
               ) : (
                 <EditOutlined
@@ -203,7 +201,7 @@ const UserDevices = () => {
                   variant="contained"
                   color="secondary"
                   onClick={handleUnassignDevice}
-                  disabled={isSubmitting && submitLoading}
+                  disabled={isSubmitting}
                 >
                   {isSubmitting ? <span>Loading...</span> : "Unassign"}
                 </Button>

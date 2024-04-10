@@ -40,6 +40,7 @@ export default function AddDevice({ handleClose, reFetch }) {
   const handleAddDevice = async (values) => {
     setIsSubmitting(true);
     try {
+      
       if (values.deviceId) {
         const url = `${apis.device}device/add?device_id=${values.deviceId}`;
         const res = await axios.post(url, null, {

@@ -30,7 +30,7 @@ const ManagerDevices = () => {
 
   const [clickedDevice, setClickedDevice] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setisSubmitting] = useState(false);
   const handleDeviceClick = (device) => {
     setClickedDevice(device);
     setDrawerOpen(true);
@@ -74,7 +74,7 @@ const ManagerDevices = () => {
   };
   console.log(clickedDevice);
   const handleUnassignDevice = async () => {
-    setIsSubmitting(true);
+    setisSubmitting(true);
     const assignDevice = {
       owner: clickedDevice.ownerUserName,
       device_id: clickedDevice.id,
@@ -86,11 +86,29 @@ const ManagerDevices = () => {
         withCredentials: true,
       });
       handleDrawerClose();
-      setIsSubmitting(false);
+      setisSubmitting(false);
       await reFetch();
     } catch (error) {
-      setIsSubmitting(false);
+      setisSubmitting(false);
       console.error("Error unassigning device:", error);
+      // Handle error, maybe show a notification to the user
+    }
+  };
+  const handleRemoveDevice = async () => {
+    setisSubmitting(true);
+    try {
+      // Make a request to unassign the device
+      const url = `${apis.device}device/remove?device_id=${clickedDevice.id}`;
+      await axios.post(url,null, {
+        headers: authHeader(),
+        withCredentials: true,
+      });
+      handleDrawerClose();
+      setisSubmitting(false);
+      await reFetch();
+    } catch (error) {
+      setisSubmitting(false);
+      console.error("Error removing device:", error);
       // Handle error, maybe show a notification to the user
     }
   };
@@ -227,13 +245,23 @@ const ManagerDevices = () => {
                 />
               )}
               <Box sx={{marginTop: '10px'}}>
-                <Button
+                {clickedDevice.ownerUserName != null && (
+                  <Button
                   variant="contained"
                   color="secondary"
                   onClick={handleUnassignDevice}
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? <span>Loading...</span> : "Unassign"}
+                </Button>
+                )}
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleRemoveDevice}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? <span>Loading...</span> : "Remove"}
                 </Button>
               </Box>
             </div>
