@@ -9,8 +9,10 @@ import Temperature from "../components/Device/Temperature/Temperature";
 import apis from "../services/api-service";
 import authHeader from "../services/auth-header";
 import authService from "../services/auth.service";
-
+import {Box} from "@mui/material"
+import Skeleton from "@mui/material/Skeleton";
 const HealthRecord = () => {
+  const [loading, setLoading] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [formattedDate, setFormattedDate] = useState(
@@ -91,9 +93,11 @@ const HealthRecord = () => {
 
         // Fetch data sequentially: month -> week -> day
         const fetchDataSequentially = async () => {
+          setLoading(true)
           await fetchDayData();
           await fetchMonthData();
           await fetchWeekData();
+          setLoading(false)
         };
 
         // Start fetching data
@@ -108,18 +112,36 @@ const HealthRecord = () => {
   console.log(formattedDate);
   return (
     <div className="container">
-      <DatePicker selected={selectedDate} onChange={handleDateChange} />
-      <HeartRate dayData={dayData} weekData={weekData} monthData={monthData} />
-      <Temperature
-        dayData={dayData}
-        weekData={weekData}
-        monthData={monthData}
-      />
-      <BloodPressure
-        dayData={dayData}
-        weekData={weekData}
-        monthData={monthData}
-      />
+      <Box sx={{ml:'10vh'}}>
+        <DatePicker selected={selectedDate} onChange={handleDateChange} disabled={loading}/>
+      </Box>
+      {loading ? (
+        <Box>
+          {Array(14)
+            .fill()
+            .map((_, i) => (
+              <>
+                <Skeleton />
+                <Skeleton animation={i % 2 === 0 ? "wave" : false} />
+              </>
+            ))}
+        </Box>
+      ) : (
+          <>
+          <HeartRate dayData={dayData} weekData={weekData} monthData={monthData} />
+          <Temperature
+            dayData={dayData}
+            weekData={weekData}
+            monthData={monthData}
+          />
+          <BloodPressure
+            dayData={dayData}
+            weekData={weekData}
+            monthData={monthData}
+          /></>
+      )}
+      
+      
     </div>
   );
 };
