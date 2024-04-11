@@ -11,6 +11,7 @@ import authHeader from "../services/auth-header";
 import authService from "../services/auth.service";
 import {Box} from "@mui/material"
 import Skeleton from "@mui/material/Skeleton";
+import "../css/health-record.css";
 const HealthRecord = () => {
   const [loading, setLoading] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -112,7 +113,7 @@ const HealthRecord = () => {
   console.log(formattedDate);
   return (
     <div className="container">
-      <Box sx={{ml:'10vh'}}>
+      <Box>
         <DatePicker selected={selectedDate} onChange={handleDateChange} disabled={loading}/>
       </Box>
       {loading ? (
@@ -127,18 +128,29 @@ const HealthRecord = () => {
             ))}
         </Box>
       ) : (
-          <>
-          <HeartRate dayData={dayData} weekData={weekData} monthData={monthData} />
-          <Temperature
-            dayData={dayData}
-            weekData={weekData}
-            monthData={monthData}
-          />
-          <BloodPressure
-            dayData={dayData}
-            weekData={weekData}
-            monthData={monthData}
-          /></>
+          <div className="chartContainer">
+            <div className="chartItem">
+              <HeartRate 
+                dayData={dayData} 
+                weekData={weekData} 
+                monthData={monthData}
+              />
+            </div>
+            <div className="chartItem">
+              <Temperature
+                dayData={dayData}
+                weekData={weekData}
+                monthData={monthData}
+              />
+            </div>
+            <div className="chartItem">
+              <BloodPressure
+                dayData={dayData}
+                weekData={weekData}
+                monthData={monthData}
+              />
+            </div>
+          </div>
       )}
       
       

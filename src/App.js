@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes , Navigate} from "react-router-dom";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
@@ -39,16 +39,27 @@ function App() {
   const [showManagerBoard, setShowManagerBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const navigator = useNavigate();
-  const fetchRoles = () => {
-    const user = AuthService.getCurrentUser();
-    if (user) {
-      setCurrentUser(user);
-      setShowManagerBoard(
-        Array.isArray(user.roles) && user.roles.includes("manager")
-      );
-      setShowAdminBoard(
-        Array.isArray(user.roles) && user.roles.includes("admin")
-      );
+  const [loading, setLoading] = useState(false)
+  const fetchRoles = async () => {
+    setLoading(true);
+    try {
+      const user = await AuthService.getCurrentUser();
+      if (user) {
+        setCurrentUser(user);
+        setShowManagerBoard(
+          Array.isArray(user.roles) && user.roles.includes("manager")
+        );
+        setShowAdminBoard(
+          Array.isArray(user.roles) && user.roles.includes("admin")
+        );
+      } else {
+        navigator("/login");
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      navigator("/login");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,12 +75,17 @@ function App() {
     setCurrentUser(null);
     localStorage.clear();
   };
+console.log(currentUser)
 
   return (
+    
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="app">
+        {loading ? (
+          <>Loading...</>
+        ):(
+          <div className="app">
           {currentUser && (
             <>
               {currentUser.roles.includes("admin") ? (
@@ -92,13 +108,17 @@ function App() {
               showManagerBoard={showManagerBoard}
             />
             <Routes>
-              <Route path="/" element={<Login fetchRoles={fetchRoles} />} />
+              <Route path="/" element={
+                  <Navigate to ="/profile"/>
+                } />
               <Route
                 path="/login"
                 element={<Login fetchRoles={fetchRoles} />}
               />
               <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={
+                  <Profile />
+                } />
               <Route
                 path="/admin/user"
                 element={
@@ -225,6 +245,8 @@ function App() {
             </Routes>
           </main>
         </div>
+        )}
+        
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

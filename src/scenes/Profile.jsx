@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import React, { useEffect, useState } from "react";
 import { Toast } from "react-bootstrap";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import "../css/user-profile.css";
 import useFetch from "../hooks/useFetch";
@@ -22,10 +22,11 @@ const Profile = () => {
 
   const { data, loading, error, reFetch } = useFetch(apis.user + "profile");
   const [refresh, setRefresh] = useState(false);
+  const navigator = useNavigate();
 
   useEffect(() => {
-    setRefresh(true);
-    const fetchData = async () => {
+    // setRefresh(true);
+    const fetchData = () => {
       localStorage.setItem("currentUser", JSON.stringify(data));
       window.onbeforeunload = () => {
         localStorage.removeItem("currentUser");
@@ -35,9 +36,11 @@ const Profile = () => {
     setCurrentUser(JSON.parse(localStorage.getItem("currentUser")));
     console.log("Current user: " + localStorage.getItem("currentUser"));
     setUserReady(true);
-    setRefresh(false);
+    // setRefresh(false);
   }, [data]);
-
+  if(userReady && !currentUser){
+    navigator("/login")
+  }
   // Components for edit profile
   const [openEditProfileDialog, setOpenEditProfileDialog] = useState(false);
 
@@ -99,9 +102,9 @@ const Profile = () => {
     }
   }, [showProfileToast, showPasswordToast]);
 
-  if (redirect) {
-    return <Navigate to={redirect} />;
-  }
+  // if (redirect) {
+  //   return <Navigate to={redirect} />;
+  // }
 
   return (
     <div className="container">

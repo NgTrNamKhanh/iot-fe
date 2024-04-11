@@ -1,0 +1,10 @@
+.container{
+    padding:  0 10vh;
+}
+.chartContainer{
+}
+.chartItem{
+    height: max-content;
+    width: 150vh;
+    margin-bottom: 10vh;
+}
