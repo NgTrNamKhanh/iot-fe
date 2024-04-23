@@ -1,4 +1,4 @@
-const serverUrl = "https://fretful-throne-production.up.railway.app";
+const serverUrl = "http://localhost:8449";
 
 const apis = {
   account: serverUrl + "/api/account/",
@@ -13,6 +13,7 @@ const apis = {
   healthRecordManagement: serverUrl + "/api/health_record-management/",
   device: serverUrl + "/api/device-management/",
   chat: serverUrl + "/api/chat/",
+  dashboard: serverUrl + "/api/dashboard/",
 };
 
 export default apis;

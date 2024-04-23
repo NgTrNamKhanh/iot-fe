@@ -1,10 +1,14 @@
-import { MenuOutlined, PeopleOutlined } from "@mui/icons-material";
+import {
+  HomeOutlined,
+  MenuOutlined,
+  PeopleOutlined,
+} from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import { BiSolidChat } from "react-icons/bi";
 import { ImProfile } from "react-icons/im";
 import { MdDevicesOther } from "react-icons/md";
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar"; // Updated imports
+import { Menu, MenuItem, Sidebar } from "react-pro-sidebar"; // Updated imports
 import { Link } from "react-router-dom";
 import { tokens } from "../../../theme";
 
@@ -32,38 +36,38 @@ const ManagerSideBar = (currentUser) => {
   const [selected, setSelected] = useState("Dashboard");
   return (
     <Box
-    sx={{
-      position: "sticky",
-      display: "flex",
-      height: "100vh",
-      top: 0,
-      bottom: 0,
-      background: colors.blueAccent[700],
-      border: 'none',
-      zIndex: 10000,
-      "& .ps-sidebar-container": {
-        backgroundColor: 'transparent !important',
-      },
-      "& .ps-sidebar-root": {
-        border: 'none',
-      },
-      "& .ps-sidebar": {
+      sx={{
+        position: "sticky",
+        display: "flex",
+        height: "100vh",
+        top: 0,
+        bottom: 0,
+        background: colors.blueAccent[700],
         border: "none",
-        backgroundColor: "transparent !important",
-      },
-      "& .ps-menu-icon": {
-        backgroundColor: "transparent !important",
-      },
-      "& .ps-menu-item-root:hover": {
-        color: `${colors.blueAccent[500]} !important`,
-        backgroundColor: "transparent !important",
-      },
-      "& .ps-menu-item.active": {
-        color: `${colors.greenAccent[500]} !important`,
-        backgroundColor: "transparent !important",
-      },
-    }}
-  >
+        zIndex: 10000,
+        "& .ps-sidebar-container": {
+          backgroundColor: "transparent !important",
+        },
+        "& .ps-sidebar-root": {
+          border: "none",
+        },
+        "& .ps-sidebar": {
+          border: "none",
+          backgroundColor: "transparent !important",
+        },
+        "& .ps-menu-icon": {
+          backgroundColor: "transparent !important",
+        },
+        "& .ps-menu-item-root:hover": {
+          color: `${colors.blueAccent[500]} !important`,
+          backgroundColor: "transparent !important",
+        },
+        "& .ps-menu-item.active": {
+          color: `${colors.greenAccent[500]} !important`,
+          backgroundColor: "transparent !important",
+        },
+      }}
+    >
       <Sidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
           <MenuItem
@@ -125,13 +129,13 @@ const ManagerSideBar = (currentUser) => {
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            {/* <Item
+            <Item
               title="Dashboard"
-              to="/manager"
+              to="/manager/dashboard"
               icon={<HomeOutlined />}
               selected={selected}
               setSelected={setSelected}
-            /> */}
+            />
             <Item
               title="Profile"
               to="/profile"

@@ -1,13 +1,10 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState } from "react";
-import { Route, Routes , Navigate} from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
-
-import AuthService from "./services/auth.service";
-
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { ProtectedRoute } from "./common/with-router";
+import Dashboard from "./scenes/Dashboard";
 import HealthProgress from "./scenes/HealthProgress.jsx";
 import HealthRecord from "./scenes/HealthRecord.jsx";
 import Login from "./scenes/Login";
@@ -30,6 +27,7 @@ import UserObjectiveView from "./scenes/health-objective/user-view.jsx";
 import HealthRecommendation from "./scenes/health-recommendation/index.jsx";
 import Organisation from "./scenes/organizations";
 import User from "./scenes/users";
+import AuthService from "./services/auth.service";
 import { ColorModeContext, useMode } from "./theme";
 
 function App() {
@@ -39,7 +37,7 @@ function App() {
   const [showManagerBoard, setShowManagerBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const navigator = useNavigate();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const fetchRoles = async () => {
     setLoading(true);
     try {
@@ -75,178 +73,193 @@ function App() {
     setCurrentUser(null);
     localStorage.clear();
   };
-console.log(currentUser)
+  console.log(currentUser);
 
   return (
-    
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {loading ? (
           <>Loading...</>
-        ):(
+        ) : (
           <div className="app">
-          {currentUser && (
-            <>
-              {currentUser.roles.includes("admin") ? (
-                <AdminSideBar currentUser={currentUser} isSidebar={isSidebar} />
-              ) : currentUser.roles.includes("manager") ? (
-                <ManagerSideBar
-                  currentUser={currentUser}
-                  isSidebar={isSidebar}
+            {currentUser && (
+              <>
+                {currentUser.roles.includes("admin") ? (
+                  <AdminSideBar
+                    currentUser={currentUser}
+                    isSidebar={isSidebar}
+                  />
+                ) : currentUser.roles.includes("manager") ? (
+                  <ManagerSideBar
+                    currentUser={currentUser}
+                    isSidebar={isSidebar}
+                  />
+                ) : currentUser.roles.includes("user") ? (
+                  <UserSideBar
+                    currentUser={currentUser}
+                    isSidebar={isSidebar}
+                  />
+                ) : null}
+              </>
+            )}
+            <main className="content">
+              <NavBar
+                logOut={logOut}
+                currentUser={currentUser}
+                showAdminBoard={showAdminBoard}
+                showManagerBoard={showManagerBoard}
+              />
+              <Routes>
+                <Route path="/" element={<Navigate to="/profile" />} />
+                <Route
+                  path="/login"
+                  element={<Login fetchRoles={fetchRoles} />}
                 />
-              ) : currentUser.roles.includes("user") ? (
-                <UserSideBar currentUser={currentUser} isSidebar={isSidebar} />
-              ) : null}
-            </>
-          )}
-          <main className="content">
-            <NavBar
-              logOut={logOut}
-              currentUser={currentUser}
-              showAdminBoard={showAdminBoard}
-              showManagerBoard={showManagerBoard}
-            />
-            <Routes>
-              <Route path="/" element={
-                  <Navigate to ="/profile"/>
-                } />
-              <Route
-                path="/login"
-                element={<Login fetchRoles={fetchRoles} />}
-              />
-              <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={
-                  <Profile />
-                } />
-              <Route
-                path="/admin/user"
-                element={
-                  <ProtectedRoute element={<User />} requiredRole="admin" />
-                }
-              />
-              <Route
-                path="/admin/organisation"
-                element={
-                  <ProtectedRoute
-                    element={<Organisation />}
-                    requiredRole="admin"
-                  />
-                }
-              />
-              <Route
-                path="/admin/userform"
-                element={
-                  <ProtectedRoute element={<UserForm />} requiredRole="admin" />
-                }
-              />
-              <Route
-                path="/admin/orgform/"
-                element={
-                  <ProtectedRoute element={<OrgForm />} requiredRole="admin" />
-                }
-              />
-              <Route
-                path="/admin/healthrecform/"
-                element={
-                  <ProtectedRoute
-                    element={<HealthRecForm />}
-                    requiredRole="admin"
-                  />
-                }
-              />
-              <Route
-                path="/admin/healthObjform/"
-                element={
-                  <ProtectedRoute
-                    element={<HealthObjForm />}
-                    requiredRole="admin"
-                  />
-                }
-              />
-              <Route
-                path="/health_recommendation-management/health_recommendations"
-                element={
-                  <ProtectedRoute
-                    element={<HealthRecommendation />}
-                    requiredRole="admin"
-                  />
-                }
-              />
-              <Route
-                path="/health_objective-management/health_objectives"
-                element={
-                  <ProtectedRoute
-                    element={<HealthObjective />}
-                    requiredRole="admin"
-                  />
-                }
-              />
-              <Route
-                path="/health_objective-management/user_health_objectives"
-                element={
-                  <ProtectedRoute
-                    element={<UserObjectiveView />}
-                    requiredRole="user"
-                  />
-                }
-              />
-              <Route
-                path="/device-management/devices"
-                element={
-                  <ProtectedRoute
-                    element={<UserDevices />}
-                    requiredRole="user"
-                  />
-                }
-              />
-              <Route
-                path="/health_progress/"
-                element={
-                  <ProtectedRoute
-                    element={<HealthProgress />}
-                    requiredRole="user"
-                  />
-                }
-              />
-              <Route
-                path="/inbox/"
-                element={
-                  <ProtectedRoute element={<Inbox />} requiredRole="user" />
-                }
-              />
-              <Route path="/health" element={<HealthRecord />} />
-              <Route path="/unauthorized" element={<UnauthorizedPage />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route
+                  path="/admin/user"
+                  element={
+                    <ProtectedRoute element={<User />} requiredRole="admin" />
+                  }
+                />
+                <Route
+                  path="/admin/organisation"
+                  element={
+                    <ProtectedRoute
+                      element={<Organisation />}
+                      requiredRole="admin"
+                    />
+                  }
+                />
+                <Route
+                  path="/admin/userform"
+                  element={
+                    <ProtectedRoute
+                      element={<UserForm />}
+                      requiredRole="admin"
+                    />
+                  }
+                />
+                <Route
+                  path="/admin/orgform/"
+                  element={
+                    <ProtectedRoute
+                      element={<OrgForm />}
+                      requiredRole="admin"
+                    />
+                  }
+                />
+                <Route
+                  path="/admin/healthrecform/"
+                  element={
+                    <ProtectedRoute
+                      element={<HealthRecForm />}
+                      requiredRole="admin"
+                    />
+                  }
+                />
+                <Route
+                  path="/admin/healthObjform/"
+                  element={
+                    <ProtectedRoute
+                      element={<HealthObjForm />}
+                      requiredRole="admin"
+                    />
+                  }
+                />
+                <Route
+                  path="/health_recommendation-management/health_recommendations"
+                  element={
+                    <ProtectedRoute
+                      element={<HealthRecommendation />}
+                      requiredRole="admin"
+                    />
+                  }
+                />
+                <Route
+                  path="/health_objective-management/health_objectives"
+                  element={
+                    <ProtectedRoute
+                      element={<HealthObjective />}
+                      requiredRole="admin"
+                    />
+                  }
+                />
+                <Route
+                  path="/health_objective-management/user_health_objectives"
+                  element={
+                    <ProtectedRoute
+                      element={<UserObjectiveView />}
+                      requiredRole="user"
+                    />
+                  }
+                />
+                <Route
+                  path="/device-management/devices"
+                  element={
+                    <ProtectedRoute
+                      element={<UserDevices />}
+                      requiredRole="user"
+                    />
+                  }
+                />
+                <Route
+                  path="/health_progress/"
+                  element={
+                    <ProtectedRoute
+                      element={<HealthProgress />}
+                      requiredRole="user"
+                    />
+                  }
+                />
+                <Route
+                  path="/inbox/"
+                  element={
+                    <ProtectedRoute element={<Inbox />} requiredRole="user" />
+                  }
+                />
+                <Route path="/health" element={<HealthRecord />} />
+                <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-              <Route
-                path="/manager/user"
-                element={
-                  <ProtectedRoute element={<User />} requiredRole="manager" />
-                }
-              />
-              <Route
-                path="/manager/devices"
-                element={
-                  <ProtectedRoute
-                    element={<ManagerDevices />}
-                    requiredRole="manager"
-                  />
-                }
-              />
-              <Route
-                path="/manager/userform"
-                element={
-                  <ProtectedRoute
-                    element={<UserForm />}
-                    requiredRole="manager"
-                  />
-                }
-              />
-            </Routes>
-          </main>
-        </div>
+                <Route
+                  path="/manager/dashboard"
+                  element={
+                    <ProtectedRoute
+                      element={<Dashboard />}
+                      requiredRole="manager"
+                    />
+                  }
+                />
+                <Route
+                  path="/manager/user"
+                  element={
+                    <ProtectedRoute element={<User />} requiredRole="manager" />
+                  }
+                />
+                <Route
+                  path="/manager/devices"
+                  element={
+                    <ProtectedRoute
+                      element={<ManagerDevices />}
+                      requiredRole="manager"
+                    />
+                  }
+                />
+                <Route
+                  path="/manager/userform"
+                  element={
+                    <ProtectedRoute
+                      element={<UserForm />}
+                      requiredRole="manager"
+                    />
+                  }
+                />
+              </Routes>
+            </main>
+          </div>
         )}
-        
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
