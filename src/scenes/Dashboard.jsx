@@ -1,5 +1,7 @@
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import { useEffect, useState } from "react";
+import Header from "../components/Header";
+import "../css/dashboard.css";
 import DashBoardService from "../services/dashboard-service";
 
 const Dashboard = () => {
@@ -28,18 +30,17 @@ const Dashboard = () => {
   return (
     <div className="dashboard-content">
       <div className="dashboard-header">
-        <h1>Dashboard</h1>
+        <Header title="Dashboard" subtitle="View statistics in organisation" />
       </div>
       <div className="dashboard-container">
         <div className="first-dashboard">
-          <h2>Percentage of health objectives selected by users</h2>
+          <h3>Percentage of health objectives selected by users</h3>
           <div className="first-dashboard-view">
             <PieChart
               series={[
                 {
                   arcLabel: (item) => `${item.value}%`,
                   arcLabelMinAngle: 55,
-                  cx: 150,
                   data: healthObjectivePercentages.map((obj, index) => ({
                     id: index,
                     value: (obj.numberOfUsers / totalUsers) * 100,
@@ -53,10 +54,11 @@ const Dashboard = () => {
                   fontWeight: "bold",
                 },
               }}
-              width={500}
-              height={300}
             />
           </div>
+        </div>
+        <div className="second-dashboard">
+          <h3>Number of devices in organisation</h3>
         </div>
       </div>
     </div>
