@@ -19,4 +19,4 @@ const apis = {
 export default apis;
 
 // Local server: http://localhost:8449
-// Production server: https://fretful-throne-production.up.railway.app
+// Production server: https://iot-be-production.up.railway.app
