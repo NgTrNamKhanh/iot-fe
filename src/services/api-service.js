@@ -1,4 +1,4 @@
-const serverUrl = "http://localhost:8449";
+const serverUrl = "https://iot-be-production.up.railway.app";
 
 const apis = {
   account: serverUrl + "/api/account/",
