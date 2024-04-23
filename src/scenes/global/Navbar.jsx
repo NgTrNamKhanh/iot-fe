@@ -2,6 +2,7 @@ import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
 import { IconButton, useTheme } from "@mui/material";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import "../../css/login.css";
 import { ColorModeContext, tokens } from "../../theme";
 
 const NavBar = ({ logOut, currentUser, showAdminBoard, showManagerBoard }) => {
@@ -21,13 +22,16 @@ const NavBar = ({ logOut, currentUser, showAdminBoard, showManagerBoard }) => {
     >
       <div style={{ display: "flex", flexBasis: "80%" }}>
         <div className="navbar-nav mr-auto">
-          <IconButton onClick={colorMode.toggleColorMode}>
+          <IconButton onClick={colorMode.toggleColorMode} id="mode-change-btn">
             {theme.palette.mode === "dark" ? (
-              <DarkModeOutlined />
+              <DarkModeOutlined className="icon-btn" />
             ) : (
-              <LightModeOutlined />
+              <LightModeOutlined className="icon-btn" />
             )}
           </IconButton>
+        </div>
+        <div>
+          <h3 className="web-title">Iot Web Portal</h3>
         </div>
       </div>
       <div style={{ flexBasis: "20%", position: "relative" }}>

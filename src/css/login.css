@@ -46,3 +46,17 @@
   margin-left: 2vh;
   margin-top: 1.5vh;
 }
+
+#mode-change-btn {
+  margin-left: 1vh !important;
+}
+
+.web-title {
+  font-size: 3vh;
+  margin-top: 1vh;
+  margin-left: 1vh;
+}
+
+.icon-btn {
+  font-size: 4vh !important;
+}
