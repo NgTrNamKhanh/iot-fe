@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import React, { useEffect, useState } from "react";
 import { Toast } from "react-bootstrap";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import "../css/user-profile.css";
 import useFetch from "../hooks/useFetch";
@@ -38,8 +38,8 @@ const Profile = () => {
     setUserReady(true);
     // setRefresh(false);
   }, [data]);
-  if(userReady && !currentUser){
-    navigator("/login")
+  if (userReady && !currentUser) {
+    navigator("/login");
   }
   // Components for edit profile
   const [openEditProfileDialog, setOpenEditProfileDialog] = useState(false);
@@ -101,10 +101,6 @@ const Profile = () => {
       }, 7000);
     }
   }, [showProfileToast, showPasswordToast]);
-
-  // if (redirect) {
-  //   return <Navigate to={redirect} />;
-  // }
 
   return (
     <div className="container">

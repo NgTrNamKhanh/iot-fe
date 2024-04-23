@@ -1,0 +1,17 @@
+.dashboard-content {
+  margin-left: 5vh;
+}
+
+.dashboard-container {
+  display: flex;
+}
+
+.first-dashboard-view {
+  margin-top: 4vh;
+  margin-left: -4vh;
+  width: 80vh;
+  height: 40vh;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
