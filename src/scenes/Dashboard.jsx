@@ -57,9 +57,6 @@ const Dashboard = () => {
             />
           </div>
         </div>
-        <div className="second-dashboard">
-          <h3>Number of devices in organisation</h3>
-        </div>
       </div>
     </div>
   );
