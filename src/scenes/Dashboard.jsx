@@ -39,7 +39,7 @@ const Dashboard = () => {
             <PieChart
               series={[
                 {
-                  arcLabel: (item) => `${item.value}%`,
+                  arcLabel: (item) => `${item.value.toFixed(2)}%`,
                   arcLabelMinAngle: 55,
                   data: healthObjectivePercentages.map((obj, index) => ({
                     id: index,
