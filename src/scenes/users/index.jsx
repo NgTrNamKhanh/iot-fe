@@ -1,4 +1,4 @@
-import { Delete, EditOutlined, Visibility } from "@mui/icons-material";
+import { Delete, EditOutlined, Favorite, Visibility } from "@mui/icons-material";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
@@ -15,6 +15,7 @@ import { tokens } from "../../theme";
 import NotificationToast from "../notification";
 import UserUpdateForm from "./update-user";
 import UserDetails from "./user-details";
+import UserHealthProgress from "./user-health-record";
 
 const User = () => {
   const [showToast, setShowToast] = useState(false);
@@ -67,6 +68,20 @@ const User = () => {
 
   const handleCloseDefaultEditDialog = () => {
     setOpenEditDialog(false);
+  };
+
+  const [openHealthRecordDialog, setOpenHealthRecordDialog] = useState(false);
+
+  const handleCloseHealthRecordDialog = () => {
+    setOpenHealthRecordDialog(false);
+    setShowToast(true);
+  };
+  const handleViewHealthRecord = (user) => {
+    setSelectedUserDetails(user);
+    setOpenHealthRecordDialog(true);
+  };
+  const handleCloseDefaultHealthRecordDialog = () => {
+    setOpenHealthRecordDialog(false);
   };
 
   const handleCloseToast = () => {
@@ -166,6 +181,12 @@ const User = () => {
       renderCell: ({ row }) => (
         <Box p="1vh" display="flex" justifyContent="center">
           <Link>
+            <Favorite
+              onClick={() => handleViewHealthRecord(row)}
+              style={{ marginRight: "2vh" }}
+            />
+          </Link>
+          <Link>
             <Visibility
               onClick={() => handleViewDetails(row)}
               style={{ marginRight: "2vh" }}
@@ -255,6 +276,13 @@ const User = () => {
             handleClose={handleCloseEditDialog}
             reFetch={filterRefetch}
             handleCloseDefault={handleCloseDefaultEditDialog}
+          />
+        )}
+        {openHealthRecordDialog && (
+          <UserHealthProgress
+            user={selectedUserDetails}
+            handleClose={handleCloseHealthRecordDialog}
+            handleCloseDefault={handleCloseDefaultHealthRecordDialog}
           />
         )}
       </Box>

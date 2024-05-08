@@ -49,7 +49,6 @@ const AssignDeviceForm = ({ handleClose, reFetch, isManager }) => {
         id: device.id,
         name: device.name,
       }));
-      console.log(deviceOptions)
       setDevicesOptions(deviceOptions);
       const usersResponse = await axios.get(
         apis.manager + "users",
@@ -67,7 +66,9 @@ const AssignDeviceForm = ({ handleClose, reFetch, isManager }) => {
       setMessage("Error fetching unassigned devices");
     }
   };
-  fetchDevices();
+  useEffect(()=>{
+      fetchDevices();
+  },[])
   const onChangeDevice = (e) => {
     setSelectedDevice(e.target.value);
   };
@@ -83,7 +84,8 @@ const AssignDeviceForm = ({ handleClose, reFetch, isManager }) => {
         setShowToast(false);
       }, 7000);
     }
-  }, [showToast]);
+  }, 
+  [showToast]);
   const handleAssignDevice = async (values) => {
     setIsSubmitting(true);
     const assignDevice = {

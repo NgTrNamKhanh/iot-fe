@@ -13,13 +13,6 @@ import DeviceBox from "./DeviceBox";
 const UserDevices = () => {
   const { data, loading, error, reFetch } = useFetch(apis.device + "devices");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  console.log(data);
-  useEffect(() => {
-    const fetchData = async () => {
-      localStorage.setItem("user_devices", JSON.stringify(data));
-    };
-    fetchData();
-  }, [data]);
   const [clickedDevice, setClickedDevice] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const handleDeviceClick = (device) => {
