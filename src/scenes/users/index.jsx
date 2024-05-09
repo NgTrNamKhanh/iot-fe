@@ -1,4 +1,9 @@
-import { Delete, EditOutlined, Favorite, Visibility } from "@mui/icons-material";
+import {
+  Delete,
+  EditOutlined,
+  Favorite,
+  Visibility,
+} from "@mui/icons-material";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
@@ -180,14 +185,12 @@ const User = () => {
       flex: 2,
       renderCell: ({ row }) => (
         <Box p="1vh" display="flex" justifyContent="center">
-          {user.roles.includes("manager")&&(
-              <Link>
-              <Favorite
-                onClick={() => handleViewHealthRecord(row)}
-                style={{ marginRight: "2vh" }}
-              />
-            </Link>
-          )}
+          <Link>
+            <Favorite
+              onClick={() => handleViewHealthRecord(row)}
+              style={{ marginRight: "2vh" }}
+            />
+          </Link>
           <Link>
             <Visibility
               onClick={() => handleViewDetails(row)}
@@ -237,8 +240,8 @@ const User = () => {
           "& .name-column--cell": {
             color: colors.greenAccent[300],
           },
-          "& .css-1essi2g-MuiDataGrid-columnHeaderRow":{
-            backgroundColor: 'transparent !important',
+          "& .css-1essi2g-MuiDataGrid-columnHeaderRow": {
+            backgroundColor: "transparent !important",
           },
           "& .MuiDataGrid-columnHeaders": {
             borderBottom: "none",
