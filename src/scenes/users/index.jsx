@@ -180,12 +180,14 @@ const User = () => {
       flex: 2,
       renderCell: ({ row }) => (
         <Box p="1vh" display="flex" justifyContent="center">
-          <Link>
-            <Favorite
-              onClick={() => handleViewHealthRecord(row)}
-              style={{ marginRight: "2vh" }}
-            />
-          </Link>
+          {user.roles.includes("manager")&&(
+              <Link>
+              <Favorite
+                onClick={() => handleViewHealthRecord(row)}
+                style={{ marginRight: "2vh" }}
+              />
+            </Link>
+          )}
           <Link>
             <Visibility
               onClick={() => handleViewDetails(row)}
